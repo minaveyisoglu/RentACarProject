@@ -50,6 +50,7 @@ namespace Business.Constants
         public static string FailAddedImageLimit = "Resim limitine ulaşıldı eklenemez";
 
         public static string UserNotFound = "Kullanıcı bulunamadı";
+        public static string AuthorizationDenied = "Yetkiniz yok.";
     }
 
 
