@@ -14,7 +14,7 @@ namespace Core.Utilities.Business
             {
                 if (!logic.Success)
                 {
-                    return logic;//Error result döndericek.Basarısız olanı business a haber veriyoruz.Kuralın kendisini döndürüyoruz
+                    return logic;
                 }
             }
 

@@ -51,6 +51,8 @@ namespace Business.Constants
 
         public static string UserNotFound = "Kullanıcı bulunamadı";
         public static string AuthorizationDenied = "Yetkiniz yok.";
+
+        public static string CarImageLimitExceeded = "Araç resmi sınırı aşıldı.";
     }
 
 

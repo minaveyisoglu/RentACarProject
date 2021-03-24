@@ -4,61 +4,51 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Core.Utilities.FileHelper
+namespace Core.Utilities.Helpers
 {
     public class FileHelper
     {
-        public static string AddAsync(IFormFile file)
+        public static string Add(IFormFile file)
         {
             var result = newPath(file);
             try
             {
-                var sourcepath = Path.GetTempFileName();
+                var sourcePath = Path.GetTempFileName();
                 if (file.Length > 0)
-                    using (var stream = new FileStream(sourcepath, FileMode.Create))
+                    using (var stream = new FileStream(sourcePath, FileMode.Create))
                         file.CopyTo(stream);
-
-                File.Move(sourcepath, result);
+                File.Move(sourcePath, result.newPath);
             }
             catch (Exception exception)
             {
-
                 return exception.Message;
             }
-
-            return result;
-
+            return result.Path2;
         }
 
-        public static string UpdateAsync(string sourcePath, IFormFile file)
+        public static string Update(string sourcePath, IFormFile file)
         {
             var result = newPath(file);
-
             try
             {
-                //File.Copy(sourcePath,result);
-
                 if (sourcePath.Length > 0)
                 {
-                    using (var stream = new FileStream(result, FileMode.Create))
+                    using (var stream = new FileStream(result.newPath, FileMode.Create))
                     {
                         file.CopyTo(stream);
                     }
                 }
-
                 File.Delete(sourcePath);
             }
-            catch (Exception excepiton)
+            catch (Exception exception)
             {
-                return excepiton.Message;
+                return exception.Message;
             }
-
-            return result;
+            return result.Path2;
         }
 
-        public static IResult DeleteAsync(string path)
+        public static IResult Delete(string path)
         {
             try
             {
@@ -72,22 +62,19 @@ namespace Core.Utilities.FileHelper
             return new SuccessResult();
         }
 
-        public static string newPath(IFormFile file)
+        public static (string newPath, string Path2) newPath(IFormFile file)
         {
-            System.IO.FileInfo ff = new System.IO.FileInfo(file.FileName);
+            FileInfo ff = new FileInfo(file.FileName);
             string fileExtension = ff.Extension;
 
-            var creatingUniqueFilename = Guid.NewGuid().ToString("N")
-               + "_" + DateTime.Now.Month + "_"
-               + DateTime.Now.Day + "_"
-               + DateTime.Now.Year + fileExtension;
+            var newPath = Guid.NewGuid() + fileExtension;
 
-            string path = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).FullName + @"\Images");
 
-            string result = $@"{path}\{creatingUniqueFilename}";
+            string path = Environment.CurrentDirectory + @"\wwwroot\uploads";
 
-            return result;
+            string result = $@"{path}\{newPath}";
+
+            return (result, $"\\uploads\\{newPath}");
         }
-
     }
 }

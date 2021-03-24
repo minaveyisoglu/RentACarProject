@@ -11,11 +11,6 @@ namespace Console1
     {
         static void Main(string[] args)
         {
-            //CarDetailGetAllTest();
-            //UserGetAllTest();
-            //UserGetByIdTest();
-            //UserAddTest();
-            //RentalAddTest();
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
             var result = rentalManager.Update(new Rental { RentalId = 5015, CarId = 2, CustomerId = 2, RentDate = new DateTime(2021, 03, 14), ReturnDate = new DateTime(2021, 02, 13) });
             Console.WriteLine(result.Message);
