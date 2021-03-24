@@ -27,8 +27,8 @@ namespace Business.Concrete
             _carImageDal = carImageDal;
         }
 
-        [CacheRemoveAspect("ICarImageService.Get")]
-        [SecuredOperation("carImages.add,admin")]
+        //[CacheRemoveAspect("ICarImageService.Get")]
+        //[SecuredOperation("carImages.add,admin")]
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Add(IFormFile file, CarImage carImage)
         {
@@ -44,8 +44,8 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        [CacheRemoveAspect("ICarImageService.Get")]
-        [SecuredOperation("carImages.delete,admin")]
+        //[CacheRemoveAspect("ICarImageService.Get")]
+        //[SecuredOperation("carImages.delete,admin")]
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Delete(CarImage carImage)
         {
@@ -54,8 +54,8 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        [CacheRemoveAspect("ICarImageService.Get")]
-        [SecuredOperation("carImages.update,admin")]
+        //[CacheRemoveAspect("ICarImageService.Get")]
+        //[SecuredOperation("carImages.update,admin")]
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Update(IFormFile file, CarImage carImage)
         {
@@ -73,20 +73,20 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        [CacheAspect]
+        //[CacheAspect]
         [ValidationAspect(typeof(CarImageValidator))]
         public IDataResult<CarImage> Get(int id)
         {
             return new SuccessDataResult<CarImage>(_carImageDal.Get(p => p.CarImageId == id));
         }
 
-        [CacheAspect]
+        //[CacheAspect]
         public IDataResult<List<CarImage>> GetAll()
         {
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
         }
 
-        [CacheAspect]
+        //[CacheAspect]
         [ValidationAspect(typeof(CarImageValidator))]
         public IDataResult<List<CarImage>> GetImagesByCarId(int id)
         {
@@ -100,7 +100,6 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(id).Data);
         }
 
-        //business rules
         private IResult CheckImageLimitExceeded(int carId)
         {
             var carImageCount = _carImageDal.GetAll(p => p.CarId == carId).Count;
@@ -112,7 +111,7 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        [CacheAspect]
+        //[CacheAspect]
         private IDataResult<List<CarImage>> CheckIfCarImageNull(int id)
         {
             try
